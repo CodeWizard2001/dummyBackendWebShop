@@ -133,6 +133,64 @@ def get_current_user():
     else:
         session.clear()
         return jsonify({"message": "User data inconsistency, logged out."}), 500
+@app.route('/auth/register', methods=['POST'])
+def register():
+    data = request.get_json()
+    # Mindestens 'username' und 'password' müssen vorhanden sein.
+    if not data or 'username' not in data or 'password' not in data:
+        return jsonify({"message": "Username and password are required"}), 400
+
+    username = data['username']
+    # Prüfe, ob der Benutzername bereits vergeben ist.
+    if username in users_db:
+        return jsonify({"message": "Username already exists"}), 409
+
+    global next_user_id
+    new_user = {
+        "id": next_user_id,
+        "username": username,
+        "password": data['password'],  # In einer echten Anwendung bitte niemals Klartext speichern! (verwende Hashing)
+        "role": data.get("role", "user"),  # Default-Rolle: "user"
+        "firstName": data.get("firstName", ""),
+        "lastName": data.get("lastName", ""),
+        "maidenName": data.get("maidenName", ""),
+        "age": data.get("age", 0),
+        "gender": data.get("gender", ""),
+        "email": data.get("email", ""),
+        "phone": data.get("phone", ""),
+        "birthDate": data.get("birthDate", ""),
+        "image": data.get("image", ""),
+        "bloodGroup": data.get("bloodGroup", ""),
+        "height": data.get("height", 0.0),
+        "weight": data.get("weight", 0.0),
+        "eyeColor": data.get("eyeColor", ""),
+        "hair": data.get("hair", {}),  # Beispiel: {"color": "White", "type": "Wavy"}
+        "ip": data.get("ip", ""),
+        "address": data.get("address", {}),  # Erwartet ein Dictionary, z. B.: { "address": "...", "city": "...", ... }
+        "macAddress": data.get("macAddress", ""),
+        "university": data.get("university", ""),
+        "bank": data.get("bank", {}),  # Beispiel: { "cardExpire": "", "cardNumber": "", ... }
+        "company": data.get("company", {}),  # Beispiel: { "name": "", "department": "", ... }
+        "ein": data.get("ein", ""),
+        "ssn": data.get("ssn", ""),
+        "userAgent": data.get("userAgent", ""),
+        "crypto": data.get("crypto", {}),  # Beispiel: { "coin": "", "wallet": "", "network": "" }
+        "orders": []  # Neue Nutzer haben noch keine Bestellungen
+    }
+    next_user_id += 1
+
+    # Füge den neuen Nutzer der User-Datenbank hinzu
+    users_db[username] = new_user
+
+    # Speichere die aktualisierte User-Datenbank in der JSON-Datei.
+    # Falls die ursprüngliche Datei als Liste gespeichert wurde, speichern wir hier alle User als Liste.
+    with open(dummy_users_file, "w") as f:
+        json.dump(list(users_db.values()), f, indent=4)
+
+    # Zum Zurückgeben entfernen wir das Passwort
+    new_user_info = {k: v for k, v in new_user.items() if k != 'password'}
+
+    return jsonify(new_user_info), 201
 
 # Produkte (unverändert)
 
