@@ -4,109 +4,123 @@ import json
 import os
 from datetime import datetime
 from flask_cors import CORS
+
 app = Flask(__name__)
 app.secret_key = 'mein_geheimer_schluessel'
-CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
-# ------------------------------
-# Laden der Produkte (wie zuvor)
+CORS(app, resources={r"/*": {"origins": ["http://localhost:*", "http://127.0.0.1:*"]}})
+
+# ----------------------------------
+# Produkte laden
 dummy_products_file = "products.json"
 if os.path.exists(dummy_products_file):
-    with open(dummy_products_file, "r") as f:
-        products_db = json.load(f)
+    try:
+        with open(dummy_products_file, "r") as f:
+            products_db = json.load(f)
+    except Exception as e:
+        print("Fehler beim Laden der Produkte:", e)
+        products_db = []
 else:
-   print("product fail")
+    print("products.json nicht gefunden. Lege leere Produktliste an.")
+    products_db = []
 
-# ------------------------------
-# Laden der User-Daten (wie im vorherigen Beispiel)
+# ----------------------------------
+# Benutzerdaten laden (für Authentifizierung)
 dummy_users_file = "user.json"
 if os.path.exists(dummy_users_file):
-    with open(dummy_users_file, "r") as f:
-        users_data = json.load(f)
-    if isinstance(users_data, list):
-        users_db = {user["username"]: user for user in users_data}
-    else:
-        users_db = users_data
-    for uname, user in users_db.items():
-        if "orders" not in user:
-            user["orders"] = []
     try:
-        next_user_id = max(user["id"] for user in users_db.values()) + 1
-    except ValueError:
-        next_user_id = 1
+        with open(dummy_users_file, "r") as f:
+            users_data = json.load(f)
+    except Exception as e:
+        print("Fehler beim Laden der Benutzerdaten:", e)
+        users_data = []
 else:
-    print("user fail")
+    print("user.json nicht gefunden. Lege leere Benutzerdaten an.")
+    users_data = []
 
+if isinstance(users_data, list):
+    users_db = {user["username"]: user for user in users_data}
+else:
+    users_db = users_data
 
-# ------------------------------
-# Laden und Speichern des Warenkorbs in einer JSON-Datei
+# Sicherstellen, dass jeder Benutzer eine Liste für Bestellungen hat
+for uname, user in users_db.items():
+    if "orders" not in user:
+        user["orders"] = []
 
-dummy_cart_file = "dummy_cart.json"
+try:
+    next_user_id = max(user["id"] for user in users_db.values()) + 1
+except Exception:
+    next_user_id = 1
+
+# ----------------------------------
+# Carts persistent speichern als Liste (DummyJSON-Style)
+dummy_cart_file = "cart.json"
 if os.path.exists(dummy_cart_file):
-    with open(dummy_cart_file, "r") as f:
-        carts_db = json.load(f)
+    try:
+        with open(dummy_cart_file, "r") as f:
+            carts_db = json.load(f)  # Erwartet wird eine Liste von Cart-Objekten
+            if not isinstance(carts_db, list):
+                # Falls doch ein anderes Format gespeichert wurde, konvertieren wir es in eine Liste:
+                carts_db = list(carts_db.values())
+    except Exception as e:
+        print("Fehler beim Laden des Warenkorbs:", e)
+        carts_db = []
 else:
-    carts_db = {}  # Struktur: { username: { "cart_id": ..., "items": { "product_id": {...}, ... } } }
+    carts_db = []  # Leere Liste, falls keine Datei existiert
 
 def save_carts():
-    with open(dummy_cart_file, "w") as f:
-        json.dump(carts_db, f, indent=4)
+    try:
+        with open(dummy_cart_file, "w") as f:
+            json.dump(carts_db, f, indent=4)
+    except Exception as e:
+        print("Fehler beim Speichern des Warenkorbs:", e)
 
-def get_cart_for_user(username):
-    """Holt den Warenkorb für den gegebenen Benutzer (erstellt einen neuen, falls nicht vorhanden)."""
-    if username not in carts_db:
-        carts_db[username] = {
-            "cart_id": f"cart_{uuid.uuid4()}",
-            "items": {}  # items wird als Dictionary gespeichert, z.B. { "1": {"product_id": 1, "quantity": 2}, ... }
-        }
-    return carts_db[username]
+# Berechne next_cart_id basierend auf der Liste der vorhandenen Carts
+next_cart_id = 1 if not carts_db else max(cart.get("id", 0) for cart in carts_db) + 1
 
-def get_cart_details(cart):
-    """Berechnet Details für einen Warenkorb, der die Struktur {cart_id, items} hat."""
-    detailed_products = []
+def calculate_cart(cart):
+    """
+    Berechnet zu einem Cart (mit 'products' als Liste von { "id": product_id, "quantity": ... })
+    die Details: total, discountedTotal, totalProducts, totalQuantity und ergänzt die Produktdaten.
+    """
+    products_detail = []
     total_quantity = 0
     total_price = 0.0
-    items = cart.get("items", {})
-
-    for item_key, item_data in items.items():
-        product = next((p for p in products_db if p["id"] == item_data['product_id']), None)
+    for prod in cart.get("products", []):
+        product = next((p for p in products_db if p["id"] == prod["id"]), None)
         if product:
-            quantity = item_data['quantity']
+            quantity = prod.get("quantity", 0)
             item_total = round(product['price'] * quantity, 2)
-            discount_percentage = product.get('discountPercentage', 0)
+            discount_percentage = product.get("discountPercentage", 0)
             item_discounted_price = round(item_total * (1 - discount_percentage / 100), 2)
-            detailed_products.append({
-                "id": product['id'],
-                "title": product['title'],
-                "price": product['price'],
+            products_detail.append({
+                "id": product["id"],
+                "title": product["title"],
+                "price": product["price"],
                 "quantity": quantity,
                 "total": item_total,
                 "discountPercentage": discount_percentage,
-                "discountedPrice": item_discounted_price
+                "discountedTotal": item_discounted_price,
+                "thumbnail": product.get("thumbnail", "")
             })
             total_quantity += quantity
             total_price += item_total
+    discounted_total = sum(item["discountedTotal"] for item in products_detail)
+    cart["products"] = products_detail
+    cart["total"] = round(total_price, 2)
+    cart["discountedTotal"] = round(discounted_total, 2)
+    cart["totalProducts"] = len(products_detail)
+    cart["totalQuantity"] = total_quantity
+    return cart
 
-    discounted_total_price = sum(p['discountedPrice'] for p in detailed_products)
+# ----------------------------------
+# Authentifizierung und Benutzerverwaltung (unverändert)
 
-    return {
-        "id": cart.get("cart_id"),
-        "products": detailed_products,
-        "total": round(total_price, 2),
-        "discountedTotal": round(discounted_total_price, 2),
-        "userId": session.get('user_id', None),
-        "totalProducts": len(detailed_products),
-        "totalQuantity": total_quantity
-    }
-
-# ------------------------------
-# Endpunkte
-
-# Authentifizierung (unverändert)
 @app.route('/auth/login', methods=['POST'])
 def login():
     data = request.get_json()
     if not data or 'username' not in data or 'password' not in data:
-        return jsonify({"message": "Username and password are required"}), 400
+        return jsonify({"message": "Username und Passwort sind erforderlich"}), 400
     username = data['username']
     password = data['password']
     user_data = users_db.get(username)
@@ -119,12 +133,12 @@ def login():
         user_info['token'] = dummy_token
         return jsonify(user_info), 200
     else:
-        return jsonify({"message": "Invalid credentials"}), 401
+        return jsonify({"message": "Ungültige Zugangsdaten"}), 401
 
 @app.route('/auth/me', methods=['GET'])
 def get_current_user():
     if 'user_id' not in session or 'username' not in session:
-        return jsonify({"message": "Authentication required"}), 401
+        return jsonify({"message": "Authentifizierung erforderlich"}), 401
     username = session['username']
     user_data = users_db.get(username)
     if user_data:
@@ -132,25 +146,29 @@ def get_current_user():
         return jsonify(user_info), 200
     else:
         session.clear()
-        return jsonify({"message": "User data inconsistency, logged out."}), 500
-@app.route('/auth/register', methods=['POST'])
-def register():
+        return jsonify({"message": "Dateninkonsistenz: Benutzer existiert nicht. Abmeldung erfolgt."}), 500
+
+@app.route('/auth/logout', methods=['POST'])
+def logout():
+    session.clear()
+    return jsonify({"message": "Erfolgreich abgemeldet"}), 200
+
+@app.route('/users/add', methods=['POST', 'OPTIONS'])
+def add_user():
+    if request.method == 'OPTIONS':
+        return jsonify({}), 200
     data = request.get_json()
-    # Mindestens 'username' und 'password' müssen vorhanden sein.
     if not data or 'username' not in data or 'password' not in data:
-        return jsonify({"message": "Username and password are required"}), 400
-
+        return jsonify({"message": "Username und Passwort sind erforderlich"}), 400
     username = data['username']
-    # Prüfe, ob der Benutzername bereits vergeben ist.
     if username in users_db:
-        return jsonify({"message": "Username already exists"}), 409
-
+        return jsonify({"message": "Username existiert bereits"}), 409
     global next_user_id
     new_user = {
         "id": next_user_id,
         "username": username,
-        "password": data['password'],  # In einer echten Anwendung bitte niemals Klartext speichern! (verwende Hashing)
-        "role": data.get("role", "user"),  # Default-Rolle: "user"
+        "password": data['password'],
+        "role": data.get("role", "user"),
         "firstName": data.get("firstName", ""),
         "lastName": data.get("lastName", ""),
         "maidenName": data.get("maidenName", ""),
@@ -164,47 +182,37 @@ def register():
         "height": data.get("height", 0.0),
         "weight": data.get("weight", 0.0),
         "eyeColor": data.get("eyeColor", ""),
-        "hair": data.get("hair", {}),  # Beispiel: {"color": "White", "type": "Wavy"}
+        "hair": data.get("hair", {}),
         "ip": data.get("ip", ""),
-        "address": data.get("address", {}),  # Erwartet ein Dictionary, z. B.: { "address": "...", "city": "...", ... }
+        "address": data.get("address", {}),
         "macAddress": data.get("macAddress", ""),
         "university": data.get("university", ""),
-        "bank": data.get("bank", {}),  # Beispiel: { "cardExpire": "", "cardNumber": "", ... }
-        "company": data.get("company", {}),  # Beispiel: { "name": "", "department": "", ... }
+        "bank": data.get("bank", {}),
+        "company": data.get("company", {}),
         "ein": data.get("ein", ""),
         "ssn": data.get("ssn", ""),
         "userAgent": data.get("userAgent", ""),
-        "crypto": data.get("crypto", {}),  # Beispiel: { "coin": "", "wallet": "", "network": "" }
-        "orders": []  # Neue Nutzer haben noch keine Bestellungen
+        "crypto": data.get("crypto", {}),
+        "orders": []
     }
     next_user_id += 1
-
-    # Füge den neuen Nutzer der User-Datenbank hinzu
     users_db[username] = new_user
-
-    # Speichere die aktualisierte User-Datenbank in der JSON-Datei.
-    # Falls die ursprüngliche Datei als Liste gespeichert wurde, speichern wir hier alle User als Liste.
-    with open(dummy_users_file, "w") as f:
-        json.dump(list(users_db.values()), f, indent=4)
-
-    # Zum Zurückgeben entfernen wir das Passwort
+    try:
+        with open(dummy_users_file, "w") as f:
+            json.dump(list(users_db.values()), f, indent=4)
+    except Exception as e:
+        print("Fehler beim Speichern der Benutzerdaten:", e)
     new_user_info = {k: v for k, v in new_user.items() if k != 'password'}
-
     return jsonify(new_user_info), 201
 
-# Produkte (unverändert)
+# ----------------------------------
+# Produkt-Endpunkte (unverändert)
 
 @app.route('/products', methods=['GET'])
 def get_products():
-    # Parameter 'limit' und 'skip' aus der URL abrufen.
-    # Standardwerte: limit=30, skip=0 (kannst Du je nach Bedarf anpassen)
     limit = request.args.get('limit', default=30, type=int)
     skip = request.args.get('skip', default=0, type=int)
-
-    # Erzeuge die paginierte Liste der Produkte (alle Felder bleiben erhalten).
     paginated_products = products_db[skip: skip + limit]
-
-    # Erstelle das Response-Objekt im gewünschten Format.
     response = {
         "products": paginated_products,
         "total": len(products_db),
@@ -213,20 +221,19 @@ def get_products():
     }
     return jsonify(response)
 
-
 @app.route('/products/<int:product_id>', methods=['GET'])
 def get_product(product_id):
     product = next((p for p in products_db if p["id"] == product_id), None)
     if product:
         return jsonify(product)
     else:
-        return jsonify({"message": f"Product with id '{product_id}' not found"}), 404
+        return jsonify({"message": f"Produkt mit id '{product_id}' nicht gefunden"}), 404
 
 @app.route('/products/search', methods=['GET'])
 def search_products():
     query = request.args.get('q')
     if not query:
-        return jsonify({"message": "Search query 'q' is required"}), 400
+        return jsonify({"message": "Suchparameter 'q' ist erforderlich"}), 400
     query = query.lower()
     results = []
     for p in products_db:
@@ -245,95 +252,122 @@ def search_products():
     }
     return jsonify(response)
 
-# ------------------------------
-# Warenkorb-Endpunkte mit JSON-Persistenz
+# ----------------------------------
+# DummyJSON-Style Carts Endpunkte (arbeiten jetzt mit einer Liste)
 
-@app.route('/cart', methods=['GET'])
-def view_cart():
-    if 'username' not in session:
-        return jsonify({"message": "Authentication required"}), 401
-    username = session['username']
-    user_cart = get_cart_for_user(username)
-    cart_details = get_cart_details(user_cart)
-    return jsonify(cart_details)
+# GET alle Carts
+@app.route('/carts', methods=['GET'])
+def get_all_carts():
+    response = {
+        "carts": carts_db,
+        "total": len(carts_db),
+        "skip": 0,
+        "limit": len(carts_db)
+    }
+    return jsonify(response)
 
-@app.route('/cart/add', methods=['POST'])
-def add_to_cart():
-    if 'username' not in session:
-        return jsonify({"message": "Authentication required to modify cart"}), 401
-    data = request.get_json()
-    if not data or 'product_id' not in data or 'quantity' not in data:
-        return jsonify({"message": "Missing product_id or quantity"}), 400
-    try:
-        product_id = int(data['product_id'])
-    except ValueError:
-        return jsonify({"message": "Invalid product_id"}), 400
-    quantity = data['quantity']
-    if not isinstance(quantity, int) or quantity <= 0:
-        return jsonify({"message": "Invalid quantity"}), 400
-    product = next((p for p in products_db if p["id"] == product_id), None)
-    if not product:
-        return jsonify({"message": "Product not found"}), 404
-
-    username = session['username']
-    user_cart = get_cart_for_user(username)
-    items = user_cart.get("items", {})
-
-    item_key = str(product_id)
-    if item_key in items:
-        items[item_key]['quantity'] += quantity
+# GET einen einzelnen Cart
+@app.route('/carts/<int:cart_id>', methods=['GET'])
+def get_cart(cart_id):
+    # Suche nach einem existierenden Cart mit der angegebenen ID
+    cart = next((c for c in carts_db if c.get("id") == cart_id), None)
+    if cart:
+        return jsonify(cart)
     else:
-        items[item_key] = {'product_id': product_id, 'quantity': quantity}
-    user_cart["items"] = items
-    carts_db[username] = user_cart
-    save_carts()  # Persistiere die Änderung
-    cart_details = get_cart_details(user_cart)
-    return jsonify(cart_details), 200
+        # Kein Cart gefunden: Neuen leeren Cart mit der gegebenen ID anlegen
+        new_cart = {
+            "id": cart_id,
+            "userId": None,        # Hier ggf. anpassen, falls der Cart mit einem Benutzer verknüpft werden soll
+            "products": [],        # Leere Liste für Produkte
+            "total": 0,
+            "discountedTotal": 0,
+            "totalProducts": 0,
+            "totalQuantity": 0
+        }
+        carts_db.append(new_cart)  # Neuen Cart zur Liste hinzufügen
+        save_carts()               # Persistiere die Änderung in der JSON-Datei
+        return jsonify(new_cart)
 
-@app.route('/cart/item/<int:product_id>', methods=['PUT'])
-def update_cart_item(product_id):
-    if 'username' not in session:
-        return jsonify({"message": "Authentication required to modify cart"}), 401
+# GET Carts eines Benutzers
+@app.route('/carts/user/<int:user_id>', methods=['GET'])
+def get_carts_by_user(user_id):
+    carts_list = [cart for cart in carts_db if cart.get("userId") == user_id]
+    response = {
+        "carts": carts_list,
+        "total": len(carts_list)
+    }
+    return jsonify(response)
+
+# POST zum Hinzufügen eines neuen Carts (Simulation)
+@app.route('/carts/add', methods=['POST'])
+def add_cart():
     data = request.get_json()
-    if not data or 'quantity' not in data:
-        return jsonify({"message": "Missing quantity"}), 400
-    quantity = data['quantity']
-    if not isinstance(quantity, int) or quantity <= 0:
-        return jsonify({"message": "Invalid quantity, must be a positive integer"}), 400
+    if not data or 'userId' not in data or 'products' not in data:
+        return jsonify({"message": "userId and products are required"}), 400
 
-    username = session['username']
-    user_cart = get_cart_for_user(username)
-    items = user_cart.get("items", {})
-    item_key = str(product_id)
-    if item_key not in items:
-        return jsonify({"message": "Product not found in cart"}), 404
-    items[item_key]['quantity'] = quantity
-    user_cart["items"] = items
-    carts_db[username] = user_cart
+    userId = data['userId']
+    products = data['products']
+    global next_cart_id
+    cart = {
+        "id": next_cart_id,
+        "userId": userId,
+        "products": products
+    }
+    cart = calculate_cart(cart)
+    carts_db.append(cart)
+    next_cart_id += 1
     save_carts()
-    cart_details = get_cart_details(user_cart)
-    return jsonify(cart_details), 200
+    return jsonify(cart)
 
-@app.route('/cart/item/<int:product_id>', methods=['DELETE'])
-def remove_from_cart(product_id):
-    if 'username' not in session:
-        return jsonify({"message": "Authentication required to modify cart"}), 401
-    username = session['username']
-    user_cart = get_cart_for_user(username)
-    items = user_cart.get("items", {})
-    item_key = str(product_id)
-    if item_key not in items:
-        return jsonify({"message": "Product not found in cart"}), 404
-    del items[item_key]
-    user_cart["items"] = items
-    carts_db[username] = user_cart
+# PUT / PATCH zum Aktualisieren eines Carts (Simulation)
+@app.route('/carts/<int:cart_id>', methods=['PUT', 'PATCH'])
+def update_cart(cart_id):
+    # Suche den existierenden Cart in der Liste
+    index = next((i for i, c in enumerate(carts_db) if c.get("id") == cart_id), None)
+    if index is None:
+        return jsonify({"message": f"Cart with id {cart_id} not found"}), 404
+
+    data = request.get_json()
+    if not data or 'products' not in data:
+        return jsonify({"message": "products field is required"}), 400
+
+    merge = data.get("merge", False)
+    new_products = data['products']
+    existing_cart = carts_db[index]
+    if merge:
+        # Vorhandene Produkte mit den neuen zusammenführen
+        existing_products = {prod['id']: prod for prod in existing_cart.get("products", [])}
+        for prod in new_products:
+            prod_id = prod['id']
+            if prod_id in existing_products:
+                existing_products[prod_id]['quantity'] += prod.get('quantity', 0)
+            else:
+                existing_products[prod_id] = prod
+        merged_products = list(existing_products.values())
+        existing_cart['products'] = merged_products
+    else:
+        existing_cart['products'] = new_products
+
+    updated_cart = calculate_cart(existing_cart)
+    carts_db[index] = updated_cart
     save_carts()
-    cart_details = get_cart_details(user_cart)
-    return jsonify(cart_details), 200
+    return jsonify(updated_cart)
 
-# ------------------------------
-# Die übrigen Endpunkte (Benutzer, Checkout, Orders) bleiben wie zuvor.
-# ...
+# DELETE zum Löschen eines Carts (Simulation)
+@app.route('/carts/<int:cart_id>', methods=['DELETE'])
+def delete_cart(cart_id):
+    index = next((i for i, c in enumerate(carts_db) if c.get("id") == cart_id), None)
+    if index is None:
+        return jsonify({"message": f"Cart with id {cart_id} not found"}), 404
+
+    cart = carts_db.pop(index)
+    cart['isDeleted'] = True
+    cart['deletedOn'] = datetime.utcnow().isoformat()
+    save_carts()
+    return jsonify(cart)
+
+# ----------------------------------
+# Weitere Endpunkte (z.B. Order-Management) können hier ergänzt werden.
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5000, debug=True)
