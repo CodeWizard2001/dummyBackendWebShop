@@ -1,0 +1,2 @@
+Flask==3.1.0        # Framework – veröffentlicht 13 Nov 2024 :contentReference[oaicite:0]{index=0}
+Flask-Cors==5.0.1   # CORS‑Erweiterung – veröffentlicht 24 Feb 2025 :contentReference[oaicite:1]{index=1}

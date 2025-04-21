@@ -6,6 +6,8 @@ from datetime import datetime
 from functools import wraps # für Decorator
 from flask_cors import CORS
 
+
+#python -m pip install -r requirements.txt
 app = Flask(__name__)
 app.secret_key = 'mein_geheimer_schluessel' # Sollte sicherer sein in Produktion!
 CORS(app, resources={r"/*": {"origins": ["http://localhost:*", "http://127.0.0.1:*"]}})
