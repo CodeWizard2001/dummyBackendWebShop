@@ -1,5 +1,4 @@
-WebShopDummy.py Current Version
-Install with
-’’’python
+WebShopDummy.py – Installation (aktuelle Version)
+
 python -m pip install -r requirements.txt
-’’’
+
