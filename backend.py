@@ -76,7 +76,7 @@ def save_carts():
         print("Fehler beim Speichern des Warenkorbs:", e)
 
 # Berechne next_cart_id basierend auf der Liste der vorhandenen Carts
-next_cart_id = 1 if not carts_db else max(cart.get("id", 0) for cart in carts_db) + 1
+    next_cart_id = 1 if not carts_db else max(cart.get("id", 0) for cart in carts_db) + 1
 
 def calculate_cart(cart):
     """
