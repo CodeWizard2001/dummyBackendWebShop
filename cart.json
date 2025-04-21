@@ -290,93 +290,133 @@
         "totalQuantity": 14
     },
     {
-        "id": 7,
+        "id": 49,
         "products": [
             {
-                "id": 167,
-                "title": "300 Touring",
-                "price": 28999.99,
-                "quantity": 5,
-                "total": 144999.95,
-                "discountPercentage": 11.78,
-                "discountedTotal": 127918.96,
-                "thumbnail": "https://cdn.dummyjson.com/products/images/vehicle/300%20Touring/thumbnail.png"
-            },
-            {
-                "id": 111,
-                "title": "Selfie Stick Monopod",
-                "price": 12.99,
+                "id": 15,
+                "title": "Wooden Bathroom Sink With Mirror",
+                "price": 799.99,
                 "quantity": 4,
-                "total": 51.96,
-                "discountPercentage": 10.98,
-                "discountedTotal": 46.25,
-                "thumbnail": "https://cdn.dummyjson.com/products/images/mobile-accessories/Selfie%20Stick%20Monopod/thumbnail.png"
+                "total": 3199.96,
+                "discountPercentage": 17.11,
+                "discountedTotal": 2652.45,
+                "thumbnail": "https://cdn.dummyjson.com/products/images/furniture/Wooden%20Bathroom%20Sink%20With%20Mirror/thumbnail.png"
             },
             {
-                "id": 129,
-                "title": "Realme X",
-                "price": 299.99,
-                "quantity": 2,
-                "total": 599.98,
-                "discountPercentage": 10.13,
-                "discountedTotal": 539.2,
-                "thumbnail": "https://cdn.dummyjson.com/products/images/smartphones/Realme%20X/thumbnail.png"
+                "id": 76,
+                "title": "Wooden Rolling Pin",
+                "price": 11.99,
+                "quantity": 3,
+                "total": 35.97,
+                "discountPercentage": 8.45,
+                "discountedTotal": 32.93,
+                "thumbnail": "https://cdn.dummyjson.com/products/images/kitchen-accessories/Wooden%20Rolling%20Pin/thumbnail.png"
+            },
+            {
+                "id": 39,
+                "title": "Soft Drinks",
+                "price": 1.99,
+                "quantity": 3,
+                "total": 5.97,
+                "discountPercentage": 5.99,
+                "discountedTotal": 5.61,
+                "thumbnail": "https://cdn.dummyjson.com/products/images/groceries/Soft%20Drinks/thumbnail.png"
+            },
+            {
+                "id": 158,
+                "title": "Sunglasses",
+                "price": 22.99,
+                "quantity": 5,
+                "total": 114.94999999999999,
+                "discountPercentage": 6.45,
+                "discountedTotal": 107.54,
+                "thumbnail": "https://cdn.dummyjson.com/products/images/sunglasses/Sunglasses/thumbnail.png"
+            },
+            {
+                "id": 110,
+                "title": "Selfie Lamp with iPhone",
+                "price": 14.99,
+                "quantity": 4,
+                "total": 59.96,
+                "discountPercentage": 19.87,
+                "discountedTotal": 48.05,
+                "thumbnail": "https://cdn.dummyjson.com/products/images/mobile-accessories/Selfie%20Lamp%20with%20iPhone/thumbnail.png"
+            },
+            {
+                "id": 124,
+                "title": "iPhone X",
+                "price": 899.99,
+                "quantity": 4,
+                "total": 3599.96,
+                "discountPercentage": 8.03,
+                "discountedTotal": 3310.88,
+                "thumbnail": "https://cdn.dummyjson.com/products/images/smartphones/iPhone%20X/thumbnail.png"
             }
         ],
-        "total": 145651.89,
-        "discountedTotal": 128504.41,
+        "total": 7016.77,
+        "discountedTotal": 6157.46,
         "userId": 86,
-        "totalProducts": 3,
-        "totalQuantity": 11
+        "totalProducts": 6,
+        "totalQuantity": 23
     },
     {
-        "id": 8,
+        "id": 47,
         "products": [
             {
-                "id": 117,
-                "title": "Sportbike Motorcycle",
-                "price": 7499.99,
-                "quantity": 2,
-                "total": 14999.98,
-                "discountPercentage": 19.83,
-                "discountedTotal": 12025.48,
-                "thumbnail": "https://cdn.dummyjson.com/products/images/motorcycle/Sportbike%20Motorcycle/thumbnail.png"
+                "id": 92,
+                "title": "Sports Sneakers Off White Red",
+                "price": 109.99,
+                "quantity": 1,
+                "total": 109.99,
+                "discountPercentage": 17.73,
+                "discountedTotal": 90.49,
+                "thumbnail": "https://cdn.dummyjson.com/products/images/mens-shoes/Sports%20Sneakers%20Off%20White%20Red/thumbnail.png"
             },
             {
-                "id": 18,
-                "title": "Cat Food",
-                "price": 8.99,
-                "quantity": 4,
-                "total": 35.96,
-                "discountPercentage": 1.15,
-                "discountedTotal": 35.55,
-                "thumbnail": "https://cdn.dummyjson.com/products/images/groceries/Cat%20Food/thumbnail.png"
-            },
-            {
-                "id": 105,
-                "title": "Apple MagSafe Battery Pack",
-                "price": 99.99,
-                "quantity": 5,
-                "total": 499.95,
-                "discountPercentage": 7.14,
-                "discountedTotal": 464.25,
-                "thumbnail": "https://cdn.dummyjson.com/products/images/mobile-accessories/Apple%20MagSafe%20Battery%20Pack/thumbnail.png"
-            },
-            {
-                "id": 6,
-                "title": "Calvin Klein CK One",
-                "price": 49.99,
+                "id": 93,
+                "title": "Brown Leather Belt Watch",
+                "price": 89.99,
                 "quantity": 3,
-                "total": 149.97,
-                "discountPercentage": 5.67,
-                "discountedTotal": 141.47,
-                "thumbnail": "https://cdn.dummyjson.com/products/images/fragrances/Calvin%20Klein%20CK%20One/thumbnail.png"
+                "total": 269.96999999999997,
+                "discountPercentage": 8.72,
+                "discountedTotal": 246.43,
+                "thumbnail": "https://cdn.dummyjson.com/products/images/mens-watches/Brown%20Leather%20Belt%20Watch/thumbnail.png"
+            },
+            {
+                "id": 38,
+                "title": "Rice",
+                "price": 5.99,
+                "quantity": 4,
+                "total": 23.96,
+                "discountPercentage": 12.55,
+                "discountedTotal": 20.95,
+                "thumbnail": "https://cdn.dummyjson.com/products/images/groceries/Rice/thumbnail.png"
+            },
+            {
+                "id": 33,
+                "title": "Mulberry",
+                "price": 4.99,
+                "quantity": 3,
+                "total": 14.97,
+                "discountPercentage": 2.75,
+                "discountedTotal": 14.56,
+                "thumbnail": "https://cdn.dummyjson.com/products/images/groceries/Mulberry/thumbnail.png"
+            },
+            {
+                "id": 53,
+                "title": "Chopping Board",
+                "price": 12.99,
+                "quantity": 3,
+                "total": 38.97,
+                "discountPercentage": 11.04,
+                "discountedTotal": 34.67,
+                "thumbnail": "https://cdn.dummyjson.com/products/images/kitchen-accessories/Chopping%20Board/thumbnail.png"
             }
         ],
-        "total": 15685.86,
-        "discountedTotal": 12666.75,
+        "total": 457.86,
+        "discountedTotal": 407.1,
         "userId": 23,
-        "totalProducts": 4,
+        "totalProducts": 5,
         "totalQuantity": 14
     },
     {
@@ -1110,64 +1150,34 @@
         "totalQuantity": 12
     },
     {
-        "id": 23,
+        "id": 28,
         "products": [
             {
-                "id": 82,
-                "title": "New DELL XPS 13 9300 Laptop",
-                "price": 1499.99,
+                "id": 1,
+                "title": "Essence Mascara Lash Princess",
+                "price": 9.99,
                 "quantity": 5,
-                "total": 7499.95,
-                "discountPercentage": 3.9,
-                "discountedTotal": 7207.45,
-                "thumbnail": "https://cdn.dummyjson.com/products/images/laptops/New%20DELL%20XPS%2013%209300%20Laptop/thumbnail.png"
+                "total": 49.95,
+                "discountPercentage": 0.63,
+                "discountedTotal": 49.64,
+                "thumbnail": "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/thumbnail.png"
             },
             {
-                "id": 172,
-                "title": "Blue Women's Handbag",
-                "price": 49.99,
+                "id": 141,
+                "title": "Basketball Rim",
+                "price": 39.99,
                 "quantity": 4,
-                "total": 199.96,
-                "discountPercentage": 8.08,
-                "discountedTotal": 183.8,
-                "thumbnail": "https://cdn.dummyjson.com/products/images/womens-bags/Blue%20Women's%20Handbag/thumbnail.png"
-            },
-            {
-                "id": 41,
-                "title": "Tissue Paper Box",
-                "price": 2.49,
-                "quantity": 2,
-                "total": 4.98,
-                "discountPercentage": 2.74,
-                "discountedTotal": 4.84,
-                "thumbnail": "https://cdn.dummyjson.com/products/images/groceries/Tissue%20Paper%20Box/thumbnail.png"
-            },
-            {
-                "id": 37,
-                "title": "Red Onions",
-                "price": 1.99,
-                "quantity": 4,
-                "total": 7.96,
-                "discountPercentage": 8.95,
-                "discountedTotal": 7.25,
-                "thumbnail": "https://cdn.dummyjson.com/products/images/groceries/Red%20Onions/thumbnail.png"
-            },
-            {
-                "id": 138,
-                "title": "Baseball Ball",
-                "price": 8.99,
-                "quantity": 5,
-                "total": 44.95,
-                "discountPercentage": 18.49,
-                "discountedTotal": 36.64,
-                "thumbnail": "https://cdn.dummyjson.com/products/images/sports-accessories/Baseball%20Ball/thumbnail.png"
+                "total": 159.96,
+                "discountPercentage": 14.7,
+                "discountedTotal": 136.45,
+                "thumbnail": "https://cdn.dummyjson.com/products/images/sports-accessories/Basketball%20Rim/thumbnail.png"
             }
         ],
-        "total": 7757.8,
-        "discountedTotal": 7439.98,
+        "total": 209.91,
+        "discountedTotal": 186.09,
         "userId": 147,
-        "totalProducts": 5,
-        "totalQuantity": 20
+        "totalProducts": 2,
+        "totalQuantity": 9
     },
     {
         "id": 24,
@@ -1318,36 +1328,6 @@
         "userId": 75,
         "totalProducts": 4,
         "totalQuantity": 11
-    },
-    {
-        "id": 28,
-        "products": [
-            {
-                "id": 1,
-                "title": "Essence Mascara Lash Princess",
-                "price": 9.99,
-                "quantity": 5,
-                "total": 49.95,
-                "discountPercentage": 0.63,
-                "discountedTotal": 49.64,
-                "thumbnail": "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/thumbnail.png"
-            },
-            {
-                "id": 141,
-                "title": "Basketball Rim",
-                "price": 39.99,
-                "quantity": 4,
-                "total": 159.96,
-                "discountPercentage": 14.7,
-                "discountedTotal": 136.45,
-                "thumbnail": "https://cdn.dummyjson.com/products/images/sports-accessories/Basketball%20Rim/thumbnail.png"
-            }
-        ],
-        "total": 209.91,
-        "discountedTotal": 186.09,
-        "userId": 147,
-        "totalProducts": 2,
-        "totalQuantity": 9
     },
     {
         "id": 29,
@@ -1730,54 +1710,34 @@
         "totalQuantity": 11
     },
     {
-        "id": 37,
+        "id": 48,
         "products": [
             {
-                "id": 171,
-                "title": "Pacifica Touring",
-                "price": 31999.99,
-                "quantity": 5,
-                "total": 159999.95,
-                "discountPercentage": 7.4,
-                "discountedTotal": 148159.95,
-                "thumbnail": "https://cdn.dummyjson.com/products/images/vehicle/Pacifica%20Touring/thumbnail.png"
+                "id": 40,
+                "title": "Strawberry",
+                "price": 3.99,
+                "quantity": 2,
+                "total": 7.98,
+                "discountPercentage": 4.6,
+                "discountedTotal": 7.61,
+                "thumbnail": "https://cdn.dummyjson.com/products/images/groceries/Strawberry/thumbnail.png"
             },
             {
-                "id": 71,
-                "title": "Silver Pot With Glass Cap",
-                "price": 39.99,
-                "quantity": 4,
-                "total": 159.96,
-                "discountPercentage": 17.64,
-                "discountedTotal": 131.74,
-                "thumbnail": "https://cdn.dummyjson.com/products/images/kitchen-accessories/Silver%20Pot%20With%20Glass%20Cap/thumbnail.png"
-            },
-            {
-                "id": 68,
-                "title": "Pan",
-                "price": 24.99,
-                "quantity": 4,
-                "total": 99.96,
-                "discountPercentage": 5.16,
-                "discountedTotal": 94.8,
-                "thumbnail": "https://cdn.dummyjson.com/products/images/kitchen-accessories/Pan/thumbnail.png"
-            },
-            {
-                "id": 182,
-                "title": "Green Crystal Earring",
-                "price": 29.99,
-                "quantity": 1,
-                "total": 29.99,
-                "discountPercentage": 0.23,
-                "discountedTotal": 29.92,
-                "thumbnail": "https://cdn.dummyjson.com/products/images/womens-jewellery/Green%20Crystal%20Earring/thumbnail.png"
+                "id": 190,
+                "title": "IWC Ingenieur Automatic Steel",
+                "price": 4999.99,
+                "quantity": 2,
+                "total": 9999.98,
+                "discountPercentage": 12.34,
+                "discountedTotal": 8765.98,
+                "thumbnail": "https://cdn.dummyjson.com/products/images/womens-watches/IWC%20Ingenieur%20Automatic%20Steel/thumbnail.png"
             }
         ],
-        "total": 160289.86,
-        "discountedTotal": 148416.41,
+        "total": 10007.96,
+        "discountedTotal": 8773.59,
         "userId": 33,
-        "totalProducts": 4,
-        "totalQuantity": 14
+        "totalProducts": 2,
+        "totalQuantity": 4
     },
     {
         "id": 38,
@@ -2240,166 +2200,6 @@
         "totalQuantity": 3
     },
     {
-        "id": 47,
-        "products": [
-            {
-                "id": 92,
-                "title": "Sports Sneakers Off White Red",
-                "price": 109.99,
-                "quantity": 1,
-                "total": 109.99,
-                "discountPercentage": 17.73,
-                "discountedTotal": 90.49,
-                "thumbnail": "https://cdn.dummyjson.com/products/images/mens-shoes/Sports%20Sneakers%20Off%20White%20Red/thumbnail.png"
-            },
-            {
-                "id": 93,
-                "title": "Brown Leather Belt Watch",
-                "price": 89.99,
-                "quantity": 3,
-                "total": 269.96999999999997,
-                "discountPercentage": 8.72,
-                "discountedTotal": 246.43,
-                "thumbnail": "https://cdn.dummyjson.com/products/images/mens-watches/Brown%20Leather%20Belt%20Watch/thumbnail.png"
-            },
-            {
-                "id": 38,
-                "title": "Rice",
-                "price": 5.99,
-                "quantity": 4,
-                "total": 23.96,
-                "discountPercentage": 12.55,
-                "discountedTotal": 20.95,
-                "thumbnail": "https://cdn.dummyjson.com/products/images/groceries/Rice/thumbnail.png"
-            },
-            {
-                "id": 33,
-                "title": "Mulberry",
-                "price": 4.99,
-                "quantity": 3,
-                "total": 14.97,
-                "discountPercentage": 2.75,
-                "discountedTotal": 14.56,
-                "thumbnail": "https://cdn.dummyjson.com/products/images/groceries/Mulberry/thumbnail.png"
-            },
-            {
-                "id": 53,
-                "title": "Chopping Board",
-                "price": 12.99,
-                "quantity": 3,
-                "total": 38.97,
-                "discountPercentage": 11.04,
-                "discountedTotal": 34.67,
-                "thumbnail": "https://cdn.dummyjson.com/products/images/kitchen-accessories/Chopping%20Board/thumbnail.png"
-            }
-        ],
-        "total": 457.86,
-        "discountedTotal": 407.1,
-        "userId": 23,
-        "totalProducts": 5,
-        "totalQuantity": 14
-    },
-    {
-        "id": 48,
-        "products": [
-            {
-                "id": 40,
-                "title": "Strawberry",
-                "price": 3.99,
-                "quantity": 2,
-                "total": 7.98,
-                "discountPercentage": 4.6,
-                "discountedTotal": 7.61,
-                "thumbnail": "https://cdn.dummyjson.com/products/images/groceries/Strawberry/thumbnail.png"
-            },
-            {
-                "id": 190,
-                "title": "IWC Ingenieur Automatic Steel",
-                "price": 4999.99,
-                "quantity": 2,
-                "total": 9999.98,
-                "discountPercentage": 12.34,
-                "discountedTotal": 8765.98,
-                "thumbnail": "https://cdn.dummyjson.com/products/images/womens-watches/IWC%20Ingenieur%20Automatic%20Steel/thumbnail.png"
-            }
-        ],
-        "total": 10007.96,
-        "discountedTotal": 8773.59,
-        "userId": 33,
-        "totalProducts": 2,
-        "totalQuantity": 4
-    },
-    {
-        "id": 49,
-        "products": [
-            {
-                "id": 15,
-                "title": "Wooden Bathroom Sink With Mirror",
-                "price": 799.99,
-                "quantity": 4,
-                "total": 3199.96,
-                "discountPercentage": 17.11,
-                "discountedTotal": 2652.45,
-                "thumbnail": "https://cdn.dummyjson.com/products/images/furniture/Wooden%20Bathroom%20Sink%20With%20Mirror/thumbnail.png"
-            },
-            {
-                "id": 76,
-                "title": "Wooden Rolling Pin",
-                "price": 11.99,
-                "quantity": 3,
-                "total": 35.97,
-                "discountPercentage": 8.45,
-                "discountedTotal": 32.93,
-                "thumbnail": "https://cdn.dummyjson.com/products/images/kitchen-accessories/Wooden%20Rolling%20Pin/thumbnail.png"
-            },
-            {
-                "id": 39,
-                "title": "Soft Drinks",
-                "price": 1.99,
-                "quantity": 3,
-                "total": 5.97,
-                "discountPercentage": 5.99,
-                "discountedTotal": 5.61,
-                "thumbnail": "https://cdn.dummyjson.com/products/images/groceries/Soft%20Drinks/thumbnail.png"
-            },
-            {
-                "id": 158,
-                "title": "Sunglasses",
-                "price": 22.99,
-                "quantity": 5,
-                "total": 114.94999999999999,
-                "discountPercentage": 6.45,
-                "discountedTotal": 107.54,
-                "thumbnail": "https://cdn.dummyjson.com/products/images/sunglasses/Sunglasses/thumbnail.png"
-            },
-            {
-                "id": 110,
-                "title": "Selfie Lamp with iPhone",
-                "price": 14.99,
-                "quantity": 4,
-                "total": 59.96,
-                "discountPercentage": 19.87,
-                "discountedTotal": 48.05,
-                "thumbnail": "https://cdn.dummyjson.com/products/images/mobile-accessories/Selfie%20Lamp%20with%20iPhone/thumbnail.png"
-            },
-            {
-                "id": 124,
-                "title": "iPhone X",
-                "price": 899.99,
-                "quantity": 4,
-                "total": 3599.96,
-                "discountPercentage": 8.03,
-                "discountedTotal": 3310.88,
-                "thumbnail": "https://cdn.dummyjson.com/products/images/smartphones/iPhone%20X/thumbnail.png"
-            }
-        ],
-        "total": 7016.77,
-        "discountedTotal": 6157.46,
-        "userId": 86,
-        "totalProducts": 6,
-        "totalQuantity": 23
-    },
-    {
         "id": 50,
         "products": [
             {
@@ -2430,9 +2230,49 @@
         "totalQuantity": 2
     },
     {
-        "id": 212,
+        "id": "dummy-jwt-token-for-1-5c09dbb4-01d8-4dff-98a7-82b4a75da37d",
         "userId": null,
         "products": [
+            {
+                "id": 1,
+                "title": "Essence Mascara Lash Princess",
+                "price": 9.99,
+                "quantity": 2,
+                "total": 19.98,
+                "discountPercentage": 7.17,
+                "discountedTotal": 18.55,
+                "thumbnail": "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/thumbnail.png"
+            }
+        ],
+        "total": 19.98,
+        "discountedTotal": 18.55,
+        "totalProducts": 1,
+        "totalQuantity": 2
+    },
+    {
+        "id": "33fd0817bf484837a309c7387b9f535b",
+        "userId": 212,
+        "products": [
+            {
+                "id": 3,
+                "title": "Powder Canister",
+                "price": 14.99,
+                "quantity": 2,
+                "total": 29.98,
+                "discountPercentage": 18.14,
+                "discountedTotal": 24.54,
+                "thumbnail": "https://cdn.dummyjson.com/products/images/beauty/Powder%20Canister/thumbnail.png"
+            },
+            {
+                "id": 2,
+                "title": "Eyeshadow Palette with Mirror",
+                "price": 19.99,
+                "quantity": 1,
+                "total": 19.99,
+                "discountPercentage": 5.5,
+                "discountedTotal": 18.89,
+                "thumbnail": "https://cdn.dummyjson.com/products/images/beauty/Eyeshadow%20Palette%20with%20Mirror/thumbnail.png"
+            },
             {
                 "id": 1,
                 "title": "Essence Mascara Lash Princess",
@@ -2444,9 +2284,45 @@
                 "thumbnail": "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/thumbnail.png"
             }
         ],
-        "total": 9.99,
-        "discountedTotal": 9.27,
-        "totalProducts": 1,
-        "totalQuantity": 1
+        "total": 59.96,
+        "discountedTotal": 52.7,
+        "totalProducts": 3,
+        "totalQuantity": 4
+    },
+    {
+        "id": "8111a936e0fd436eb53e2a474d0265a4",
+        "userId": 213,
+        "products": [],
+        "total": 0.0,
+        "discountedTotal": 0.0,
+        "totalProducts": 0,
+        "totalQuantity": 0
+    },
+    {
+        "id": "0a73c95a110d4e37b8535f4205faea4f",
+        "userId": 214,
+        "products": [],
+        "total": 0.0,
+        "discountedTotal": 0.0,
+        "totalProducts": 0,
+        "totalQuantity": 0
+    },
+    {
+        "id": "a7259b873c884b49989a2d3fff958493",
+        "userId": 215,
+        "products": [],
+        "total": 0.0,
+        "discountedTotal": 0.0,
+        "totalProducts": 0,
+        "totalQuantity": 0
+    },
+    {
+        "id": "90b572864d244e6398111a0a7a10918f",
+        "userId": 216,
+        "products": [],
+        "total": 0.0,
+        "discountedTotal": 0.0,
+        "totalProducts": 0,
+        "totalQuantity": 0
     }
 ]

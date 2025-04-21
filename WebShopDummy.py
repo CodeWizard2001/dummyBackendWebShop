@@ -333,15 +333,42 @@ def add_user():
 
 @app.route('/products', methods=['GET'])
 def get_products():
+    # Query-Parameter auslesen
     limit = request.args.get('limit', default=30, type=int)
     skip = request.args.get('skip', default=0, type=int)
-    paginated_products = products_db[skip: skip + limit]
+    category_filter = request.args.get('category', default=None, type=str) # NEU: Kategorie-Filter lesen
+
+    # Produkte laden (wie bisher)
+    current_products = products_db # Start mit allen Produkten
+
+    # NEU: Filtern nach Kategorie, falls Parameter angegeben wurde
+    if category_filter:
+        category_filter_lower = category_filter.lower() # Für case-insensitive Vergleich
+        filtered_products = []
+        for p in current_products:
+            # Prüfen, ob das Produkt eine Kategorie hat und sie übereinstimmt
+            product_category = p.get('category')
+            if isinstance(product_category, str) and product_category.lower() == category_filter_lower:
+                filtered_products.append(p)
+        current_products = filtered_products # Überschreibe die Liste mit den gefilterten Ergebnissen
+        print(f"Filtere Produkte nach Kategorie: {category_filter}. Gefunden: {len(current_products)}") # Log-Ausgabe
+
+    # Berechne die Gesamtzahl *nach* dem Filtern
+    total_filtered_products = len(current_products)
+
+    # Paginierung auf die (ggf. gefilterte) Liste anwenden
+    paginated_products = current_products[skip : skip + limit]
+
+    # Antwort zusammenstellen
     response = {
         "products": paginated_products,
-        "total": len(products_db),
+        "total": total_filtered_products, # Wichtig: Gesamtzahl der gefilterten Produkte
         "skip": skip,
         "limit": limit
     }
+    if category_filter:
+        response['filter'] = {'category': category_filter} # Optional: Info über aktiven Filter mitsenden
+
     return jsonify(response)
 
 @app.route('/products/<int:product_id>', methods=['GET'])
