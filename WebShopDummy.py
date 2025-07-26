@@ -9,8 +9,8 @@ from flask_cors import CORS
 
 #python -m pip install -r requirements.txt
 app = Flask(__name__)
-app.secret_key = 'mein_geheimer_schluessel' # Sollte sicherer sein in Produktion!
-CORS(app, resources={r"/*": {"origins": ["http://localhost:*", "http://127.0.0.1:*"]}})
+# Sollte sicherer sein in Produktion!
+CORS(app)
 
 # ----------------------------------
 # Produkte laden
@@ -616,7 +616,15 @@ def get_cart_by_user_id(target_user_id):
 #     # Wenn Admin: Benötigt target_user_id im Body und Prüfung der Admin-Rolle
 #     return jsonify({"message": "Endpoint deprecated or for admin use only. Use PUT /cart to create/update your cart."}), 405
 
-
+@app.route('/products/categories', methods=['GET'])
+def get_categories():
+    # Extrahiere alle eindeutigen Kategorien aus products_db
+    categories = sorted({
+        p.get('category')
+        for p in products_db
+        if isinstance(p.get('category'), str)
+    })
+    return jsonify(categories), 200
 # ----------------------------------
 # Hauptausführung
 
@@ -637,4 +645,4 @@ if __name__ == '__main__':
     # (In einer echten App würde man das Refactoring sauberer machen)
     # ... (Code zum Laden hier wiederholen oder besser strukturieren) ...
 
-    app.run(host='127.0.0.1', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
